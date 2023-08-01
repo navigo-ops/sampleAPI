@@ -80,11 +80,15 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/verify/resend",
+											"raw": "https://api.canvass.dev/v1/verify/resend",
+											"protocol": "https",
 											"host": [
-												"{{baseUrl}}"
+												"api",
+												"canvass",
+												"dev"
 											],
 											"path": [
+												"v1",
 												"verify",
 												"resend"
 											]
@@ -238,11 +242,15 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/verify/confirm",
+											"raw": "https://api.canvass.dev/v1/verify/confirm",
+											"protocol": "https",
 											"host": [
-												"{{baseUrl}}"
+												"api",
+												"canvass",
+												"dev"
 											],
 											"path": [
+												"v1",
 												"verify",
 												"confirm"
 											]
@@ -416,11 +424,15 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/verify",
+									"raw": "https://api.canvass.dev/v1/verify",
+									"protocol": "https",
 									"host": [
-										"{{baseUrl}}"
+										"api",
+										"canvass",
+										"dev"
 									],
 									"path": [
+										"v1",
 										"verify"
 									]
 								}
@@ -553,11 +565,15 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/verify",
+									"raw": "https://api.canvass.dev/v1/verify",
+									"protocol": "https",
 									"host": [
-										"{{baseUrl}}"
+										"api",
+										"canvass",
+										"dev"
 									],
 									"path": [
+										"v1",
 										"verify"
 									]
 								}
@@ -583,11 +599,12 @@
 			"name": "signup",
 			"item": [
 				{
-					"name": "Sign up",
+					"name": "Sign up-Positive",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
+								"id": "4d9b823c-d6f2-42ed-add8-835f7ae074bc",
 								"exec": [
 									"var responseJSON = pm.response.json();",
 									"",
@@ -685,7 +702,7 @@
 									"",
 									"pm.test(\"Data object Structure is valid - city\",function(){",
 									"",
-									"    //phone_number validation",
+									"    //city validation",
 									"    pm.expect(responseJSON.data).has.property('city');",
 									"    pm.expect(responseJSON.data).has.property('city').is.string;",
 									"    ",
@@ -702,7 +719,7 @@
 									"",
 									"pm.test(\"Data object Structure is valid - zipcode\",function(){",
 									"",
-									"    //state validation",
+									"    //zipcode validation",
 									"    pm.expect(responseJSON.data).has.property('zipcode');",
 									"    pm.expect(responseJSON.data).has.property('zipcode').is.string;",
 									"    pm.expect(responseJSON.data).has.property('zipcode').is.lengthOf(5);",
@@ -711,7 +728,7 @@
 									"",
 									"pm.test(\"Data object Structure is valid - license_front_url\",function(){",
 									"",
-									"    //state validation",
+									"    //liscense_front_url validation",
 									"    pm.expect(responseJSON.data).has.property('license_front_url');",
 									"    pm.expect(responseJSON.data).has.property('license_front_url').is.string;",
 									"    ",
@@ -719,13 +736,13 @@
 									"",
 									"pm.test(\"Data object Structure is valid - license_back_url\",function(){",
 									"",
-									"    //state validation",
+									"    //liscense_front_back validation",
 									"    pm.expect(responseJSON.data).has.property('license_back_url');",
 									"    pm.expect(responseJSON.data).has.property('license_back_url').is.string;",
 									"    ",
 									"});",
 									"",
-									"pm.test(\"Data object Structure is valid - license_back_url\",function(){",
+									"pm.test(\"Data object Structure is valid - profile_image_url\",function(){",
 									"",
 									"  //profile_image_url validation",
 									"    pm.expect(responseJSON.data).has.property('profile_image_url');",
@@ -734,73 +751,136 @@
 									"});",
 									"",
 									"",
-									"pm.test(\"Data object Structure is valid - license_back_url\",function(){",
+									"pm.test(\"Data object Structure is valid - notify_account_status\",function(){",
 									"",
-									"  //profile_image_url validation",
-									"    pm.expect(responseJSON.data).has.property('profile_image_url');",
-									"    pm.expect(responseJSON.data).has.property('profile_image_url').is.string;",
-									"    ",
-									"});",
-									"",
-									"pm.test(\"Data object Structure is valid - license_back_url\",function(){",
-									"",
+									"    //notify_account_status validation",
 									"    pm.expect(responseJSON.data).has.property('notify_account_status');",
 									"    pm.expect(responseJSON.data.notify_account_status).to.be.a(\"boolean\");",
+									"    //pm.expect(responseJSON.data.notify_account_status).eql(\"true\");",
+									"    ",
+									"});",
 									"",
-									"    pm.expect(responseJSON.data).has.property('notify_transactions');",
+									"pm.test(\"Data object Structure is valid - notify_campaign_approval\",function(){",
+									"",
+									"    //notify_campaign_approval validation",
 									"    pm.expect(responseJSON.data).has.property('notify_campaign_approval');",
+									"    pm.expect(responseJSON.data.notify_campaign_approval).to.be.a(\"boolean\");",
+									"    //pm.expect(responseJSON.data.notify_campaign_approval).eql(\"true\");  ",
+									"});",
+									"",
+									"",
+									"pm.test(\"Data object Structure is valid - notify_new_campaign\",function(){",
+									"",
+									"    //notify_new_campaign validation",
 									"    pm.expect(responseJSON.data).has.property('notify_new_campaign');",
-									"     pm.expect(responseJSON.data.notify_new_campaign).to.be.a(\"boolean\");",
-									"    ",
+									"    pm.expect(responseJSON.data.notify_new_campaign).to.be.a(\"boolean\");",
+									"    //pm.expect(responseJSON.data.notify_new_campaign).eql(\"true\");  ",
 									"});",
 									"",
 									"",
-									"pm.test(\"Data object structure is valid\", function () {",
+									"pm.test(\"Data object Structure is valid - notify_transactions\",function(){",
 									"",
+									"    //notify_transactions validation",
+									"    pm.expect(responseJSON.data).has.property('notify_transactions');",
+									"    pm.expect(responseJSON.data.notify_transactions).to.be.a(\"boolean\");",
+									"    //pm.expect(responseJSON.data.notify_transactions).eql(\"true\");  ",
+									"});",
 									"",
+									"pm.test(\"Data object Structure is valid - current_balance\",function(){",
 									"",
-									"",
-									"    //city validation",
-									"    ",
-									"",
-									"    //state validation",
-									"   ",
-									"",
-									"    //zipcode validation",
-									"  ",
-									"",
-									"    //license_front_url validation",
-									"  ",
-									"",
-									"",
-									"    //boolean validation needs to be added",
-									"",
-									"",
-									"",
-									"    //number validations needs to be added",
+									"    //current_balance validation",
 									"    pm.expect(responseJSON.data).has.property('current_balance');",
-									"    pm.expect(responseJSON.data).has.property('approved_balance');",
-									"    pm.expect(responseJSON.data).has.property('total_earnings');",
-									"    pm.expect(responseJSON.data).has.property('potential_earnings');",
-									"    pm.expect(responseJSON.data).has.property('privacy');",
-									"    pm.expect(responseJSON.data).has.property('terms');",
-									"    pm.expect(responseJSON.data).has.property('created');",
-									"    pm.expect(responseJSON.data).has.property('modified');",
+									"    pm.expect(responseJSON.data.current_balance).is.not.null;",
+									"    pm.expect(responseJSON.data.current_balance).is.a(\"number\");",
+									"    pm.expect(responseJSON.data.current_balance).to.match(/[+-]?([0-9]*[.])?[0-9]+/)",
+									"",
 									"});",
 									"",
 									"",
-									"pm.test(\"current_balance, approved_balance, total_earnings, potential_earnings should be valid\",function(){",
-									"    pm.expect(responseJSON.data.current_balance).is.not.null;",
-									"    pm.expect(responseJSON.data.approved_balance).is.not.null;",
-									"    pm.expect(responseJSON.data.total_earnings).is.not.null;",
-									"    pm.expect(responseJSON.data.potential_earnings).is.not.null;",
-									"})",
 									"",
-									"pm.test(\"privacy,terms,created,modified is valid\",function(){",
-									"    pm.expect(responseJSON.data.created).is.greaterThan(0.00);",
-									"    pm.expect(responseJSON.data.privacy).is.greaterThan(0.00);",
-									"    pm.expect(responseJSON.data.terms).is.greaterThan(0.00);",
-									"    pm.expect(responseJSON.data.modified).is.greaterThan(0.00);",
+									"pm.test(\"Data object Structure is valid - approved_balance\",function(){",
+									"",
+									"    //approved_balance validation",
+									"    pm.expect(responseJSON.data).has.property('approved_balance');",
+									"    pm.expect(responseJSON.data.approved_balance).is.not.null;",
+									"    pm.expect(responseJSON.data.approved_balance).is.a(\"number\");",
+									"    pm.expect(responseJSON.data.approved_balance).to.match(/[+-]?([0-9]*[.])?[0-9]+/)",
+									"",
+									"});",
+									"",
+									"pm.test(\"Data object Structure is valid - total_earnings\",function(){",
+									"",
+									"    //total_earnings validation",
+									"    pm.expect(responseJSON.data).has.property('total_earnings');",
+									"    pm.expect(responseJSON.data.total_earnings).is.not.null;",
+									"    pm.expect(responseJSON.data.total_earnings).is.a(\"number\");",
+									"    pm.expect(responseJSON.data.total_earnings).to.match(/[+-]?([0-9]*[.])?[0-9]+/)",
+									"",
+									"});",
+									"",
+									"pm.test(\"Data object Structure is valid - potential_earnings\",function(){",
+									"",
+									"    //potential_earnings validation",
+									"    pm.expect(responseJSON.data).has.property('potential_earnings');",
+									"    pm.expect(responseJSON.data.potential_earnings).is.not.null;",
+									"    pm.expect(responseJSON.data.potential_earnings).is.a(\"number\");",
+									"    pm.expect(responseJSON.data.potential_earnings).to.match(/[+-]?([0-9]*[.])?[0-9]+/)",
+									"",
+									"});",
+									"",
+									"pm.test(\"Data object Structure is valid - status\",function(){",
+									"",
+									"    //status validation",
+									"    pm.expect(responseJSON.data).has.property('status');",
+									"    pm.expect(responseJSON.data).has.property('status').is.string;",
+									"    pm.expect(responseJSON.data.affiliation).to.be.oneOf([\"verification-pending\", \"verification-failed\", \"deactivated\",\"verified\"]);",
+									"",
+									"});",
+									"",
+									"",
+									"pm.test(\"Data object structure is valid-privacy\", function () {",
+									"",
+									"//privacy validation",
+									"    var privacyValue=responseJSON.data.privacy;",
+									"    if(privacyValue != null)",
+									"    {",
+									"        console.log(\"User has accepted the privacy terms\");",
+									"        pm.expect(privacyValue).is.a(\"number\")",
+									"        pm.expect(privacyValue).to.be.above(0);  ",
+									"    }",
+									"    else",
+									"    {",
+									"       console.log(\"User has not accepted the privacy terms\");",
+									"       pm.expect(privacyValue).is.null;",
+									"       ",
+									"    }",
+									"});",
+									"",
+									"",
+									"pm.test(\"Data object structure is valid-terms\", function () {",
+									"",
+									"//terms validation",
+									"    var termsValue=responseJSON.data.terms;",
+									"    if(termsValue != null)",
+									"    {",
+									"        console.log(\"User has accepted the terms\");",
+									"        pm.expect(termsValue).is.a(\"number\")",
+									"        pm.expect(termsValue).to.be.above(0);  ",
+									"    }",
+									"    else",
+									"    {",
+									"       console.log(\"User has not accepted the terms\");",
+									"       pm.expect(privacyValue).is.null;",
+									"       ",
+									"    }",
+									"});",
+									"",
+									"pm.test(\"created,modified is valid\",function(){",
+									"   ",
+									"    //Created,Modified validation",
+									"",
+									"    pm.expect(responseJSON.data.created).is.above(0);",
+									"    pm.expect(responseJSON.data.modified).is.above(0);",
 									"})",
 									"",
 									"",
@@ -808,8 +888,7 @@
 									"",
 									""
 								],
-								"type": "text/javascript",
-								"id": "4d9b823c-d6f2-42ed-add8-835f7ae074bc"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -841,7 +920,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n   \"email\":\"rahul.jaiswa@navigo.com\",\r\n   \"username\":\"Amazing_Test_Details\",\r\n   \"affiliation\":\"TYAJJS\",\r\n   \"first_name\":\"Rahul\",\r\n   \"last_name\":\"Jaiswal\",\r\n   \"age_range\":\"18-35\",\r\n   \"birth_date\":\"17-01-1994\",\r\n   \"phone\":\"55126991\",\r\n   \"city\":\"Mumbai\",\r\n   \"state\":\"Maharashtra\",\r\n   \"zipcode\":\"400705\",\r\n   \"timezone\":\"IST\",\r\n   \"license_front_url\":\"\",\r\n   \"license_back_url\":\"\",\r\n   \"privacy\":true,\r\n   \"terms\":true,\r\n   \"status\":\"Executed\",\r\n   \"current_balance\":\"1000\",\r\n   \"approved_balance\":\"44500\",\r\n   \"total_earnings\":\"2300\",\r\n   \"potential_earnings\":\"12000\",\r\n   \"notify_account_status\":\"\",\r\n   \"notify_transactions\":\"\",\r\n   \"notify_campaign_approval\":\"\",\r\n   \"notify_new_campaign\":\"\",\r\n   \"created\": \"\",\r\n   \"modified\":\"\",\r\n}",
+							"raw": "{\r\n   \"email\":\"rahul.jaiswa@navigo.com\",\r\n   \"username\":\"Amazing_Test_Details\",\r\n   \"affiliation\":\"TYAJJS\",\r\n   \"first_name\":\"Rahul\",\r\n   \"last_name\":\"Jaiswal\",\r\n   \"age_range\":\"18-35\",\r\n   \"birth_date\":\"17-01-1994\",\r\n   \"phone\":\"55126991\",\r\n   \"city\":\"Mumbai\",\r\n   \"state\":\"Maharashtra\",\r\n   \"zipcode\":\"400705\",\r\n   \"timezone\":\"IST\",\r\n   \"license_front_url\":\"\",\r\n   \"license_back_url\":\"\",\r\n   \"privacy\":true,\r\n   \"terms\":true,\r\n   \"status\":\"Executed\",\r\n   \"current_balance\":\"1000\",\r\n   \"approved_balance\":\"44500\",\r\n   \"total_earnings\":\"2300\",\r\n   \"potential_earnings\":\"12000\",\r\n   \"notify_account_status\":true,\r\n   \"notify_transactions\":\"\",\r\n   \"notify_campaign_approval\":\"\",\r\n   \"notify_new_campaign\":\"\",\r\n   \"created\": \"\",\r\n   \"modified\":\"\",\r\n}",
 							"options": {
 								"raw": {
 									"headerFamily": "json",
@@ -892,11 +971,15 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/signup",
+									"raw": "https://api.canvass.dev/v1/signup",
+									"protocol": "https",
 									"host": [
-										"{{baseUrl}}"
+										"api",
+										"canvass",
+										"dev"
 									],
 									"path": [
+										"v1",
 										"signup"
 									]
 								}
@@ -915,6 +998,175 @@
 						},
 						{
 							"id": "178a384b-a054-4652-a440-908995d60241",
+							"name": "Invalid entry. Unprocessable Entity.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": "Added as a part of security scheme: bearer",
+										"key": "Authorization",
+										"value": "Bearer <token>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": \"<uuid>\",\n  \"email\": \"<email>\",\n  \"username\": \"<string>\",\n  \"affiliation\": \"democrat\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"age_range\": \"18-35\",\n  \"birth_date\": \"<date>\",\n  \"phone\": \" ﻿326)337\\t5022\",\n  \"city\": \"<string>\",\n  \"state\": \"<string>\",\n  \"zipcode\": \"<string>\",\n  \"timezone\": \"\",\n  \"license_front_url\": \"<string>\",\n  \"license_back_url\": \"<string>\",\n  \"profile_image_url\": \"<string>\",\n  \"privacy\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  },\n  \"terms\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  },\n  \"status\": \"verification-pending\",\n  \"current_balance\": \"<float>\",\n  \"approved_balance\": \"<float>\",\n  \"total_earnings\": \"<float>\",\n  \"potential_earnings\": \"<float>\",\n  \"notify_account_status\": true,\n  \"notify_transactions\": true,\n  \"notify_campaign_approval\": true,\n  \"notify_new_campaign\": true,\n  \"created\": \"<long>\",\n  \"modified\": \"<long>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/signup",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"signup"
+									]
+								}
+							},
+							"status": "Not Acceptable",
+							"code": 406,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Sign up-Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4d9b823c-d6f2-42ed-add8-835f7ae074bc",
+								"exec": [
+									"var responseJSON = pm.response.json();",
+									"",
+									"pm.test(\"Response status code is 406\", function () {",
+									"    pm.response.to.have.status(406);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "c4d4743f-7c16-4e67-a3c7-7977e26a8f9b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"email\":\"rahul.jaiswa@navigo.com\",\r\n   \"username\":\"Amazing_Test_Details\",\r\n   \"affiliation\":\"TYAJJS\",\r\n   \"first_name\":\"Rahul\",\r\n   \"last_name\":\"Jaiswal\",\r\n   \"age_range\":\"18-35\",\r\n   \"birth_date\":\"17-01-1994\",\r\n   \"phone\":\"55126991\",\r\n   \"city\":\"Mumbai\",\r\n   \"state\":\"Maharashtra\",\r\n   \"zipcode\":\"400705\",\r\n   \"timezone\":\"IST\",\r\n   \"license_front_url\":\"\",\r\n   \"license_back_url\":\"\",\r\n   \"privacy\":true,\r\n   \"terms\":true,\r\n   \"status\":\"Executed\",\r\n   \"current_balance\":\"1000\",\r\n   \"approved_balance\":\"44500\",\r\n   \"total_earnings\":\"2300\",\r\n   \"potential_earnings\":\"12000\",\r\n   \"notify_account_status\":true,\r\n   \"notify_transactions\":\"\",\r\n   \"notify_campaign_approval\":\"\",\r\n   \"notify_new_campaign\":\"\",\r\n   \"created\": \"\",\r\n   \"modified\":\"\",\r\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/signup",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"signup"
+							]
+						},
+						"description": "Sign up and enter the user's data to create a new profile."
+					},
+					"response": [
+						{
+							"id": "447e6171-a986-421d-b4ae-3ddc2ba4fb81",
+							"name": "New profile",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"description": "Added as a part of security scheme: bearer",
+										"key": "Authorization",
+										"value": "Bearer <token>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": \"<uuid>\",\n  \"email\": \"<email>\",\n  \"username\": \"<string>\",\n  \"affiliation\": \"democrat\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"age_range\": \"18-35\",\n  \"birth_date\": \"<date>\",\n  \"phone\": \" ﻿326)337\\t5022\",\n  \"city\": \"<string>\",\n  \"state\": \"<string>\",\n  \"zipcode\": \"<string>\",\n  \"timezone\": \"\",\n  \"license_front_url\": \"<string>\",\n  \"license_back_url\": \"<string>\",\n  \"profile_image_url\": \"<string>\",\n  \"privacy\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  },\n  \"terms\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  },\n  \"status\": \"verification-pending\",\n  \"current_balance\": \"<float>\",\n  \"approved_balance\": \"<float>\",\n  \"total_earnings\": \"<float>\",\n  \"potential_earnings\": \"<float>\",\n  \"notify_account_status\": true,\n  \"notify_transactions\": true,\n  \"notify_campaign_approval\": true,\n  \"notify_new_campaign\": true,\n  \"created\": \"<long>\",\n  \"modified\": \"<long>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://api.canvass.dev/v1/signup",
+									"protocol": "https",
+									"host": [
+										"api",
+										"canvass",
+										"dev"
+									],
+									"path": [
+										"v1",
+										"signup"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"data\": {\n    \"email\": \"<email>\",\n    \"username\": \"<string>\"\n  }\n}"
+						},
+						{
+							"id": "81b273f4-c064-47c0-8ac4-8ba6609fba8a",
 							"name": "Invalid entry. Unprocessable Entity.",
 							"originalRequest": {
 								"method": "POST",
@@ -1187,11 +1439,15 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/signup",
+									"raw": "https://api.canvass.dev/v1/signup",
+									"protocol": "https",
 									"host": [
-										"{{baseUrl}}"
+										"api",
+										"canvass",
+										"dev"
 									],
 									"path": [
+										"v1",
 										"signup"
 									]
 								}
@@ -1265,125 +1521,287 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "a95db5e7-b3ca-4122-a66c-8b8ab1866b3b",
 								"exec": [
 									"var responseJSON = pm.response.json();",
 									"",
-									"pm.test(\"Response status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
+									"pm.test(\"Response status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
 									"});",
 									"",
 									"pm.test(\"Response body structure is valid\", function () {",
 									"    pm.expect(responseJSON).to.be.an('object').that.has.property('data');",
+									"    pm.expect(responseJSON.data).to.be.an('object');",
+									"    pm.expect(responseJSON.data).to.be.an('object').is.not.null;",
+									"",
 									"});",
 									"",
-									"pm.test(\"Data object structure is valid\", function () {",
 									"",
-									"    //id validation",
+									"pm.test(\"Data object Structure is valid - ID\",function(){",
+									"",
+									"//id validation",
 									"    pm.expect(responseJSON.data).has.property('id');",
 									"    pm.expect(responseJSON.data).has.property('id').is.not.null;",
 									"",
-									"    //email validation",
-									"    pm.expect(responseJSON.data).has.property('email');",
+									"});",
+									"",
+									"",
+									"pm.test(\"Data object Structure is valid - email\",function(){",
+									"",
+									"//email validation",
+									"   pm.expect(responseJSON.data).has.property('email');",
 									"    pm.expect(responseJSON.data).has.property('email').is.not.null;",
 									"    pm.expect(responseJSON.data).has.property('email').is.string;",
-									"    pm.expect(responseJSON.data.email).to.include('@');",
-									"    pm.expect(responseJSON.data.email).to.include('.com');",
-									"    ",
+									"    pm.expect(responseJSON.data.email).to.match(/^[a-z0-9]+@[a-z]+\\.[a-z]{2,3}/);",
+									"});",
 									"",
-									"    //username validation",
+									"pm.test(\"Data object Structure is valid - username\",function(){",
+									"",
+									"//username validation",
 									"    pm.expect(responseJSON.data).has.property('username');",
 									"    pm.expect(responseJSON.data).has.property('username').is.string;",
+									"",
+									"});",
+									"",
+									"pm.test(\"Data object Structure is valid - first_name\",function(){",
 									"",
 									"    //firstname validation",
 									"    pm.expect(responseJSON.data).has.property('first_name');",
 									"    pm.expect(responseJSON.data).has.property('first_name').is.string;",
+									"    ",
+									"});",
+									"",
+									"pm.test(\"Data object Structure is valid - last_name\",function(){",
 									"",
 									"    //lastname validation",
 									"    pm.expect(responseJSON.data).has.property('last_name');",
 									"    pm.expect(responseJSON.data).has.property('last_name').is.string;",
+									"    ",
+									"});",
+									"",
+									"pm.test(\"Data object Structure is valid - affiliation\",function(){",
 									"",
 									"    //affiliation validation",
 									"    pm.expect(responseJSON.data).has.property('affiliation');",
 									"    pm.expect(responseJSON.data).has.property('affiliation').is.string;",
-									"    pm.expect(responseJSON.data.affiliation).to.be.oneOf([\"democrat\", \"republican\", \"independent\",\"other\"])",
+									"    pm.expect(responseJSON.data.affiliation).to.be.oneOf([\"democrat\", \"republican\", \"independent\",\"other\"]);",
+									"    ",
+									"});",
+									"",
+									"",
+									"pm.test(\"Data object Structure is valid - birth_date\",function(){",
 									"",
 									"    //birthdate validation",
 									"    pm.expect(responseJSON.data).has.property('birth_date');",
 									"    pm.expect(responseJSON.data).has.property('birth_date').is.string;",
 									"    pm.expect(responseJSON.data.birth_date).to.match(/^\\d{4}-\\d{2}-\\d{2}$/);",
+									"    ",
+									"});",
 									"",
+									"pm.test(\"Data object Structure is valid - age_range\",function(){",
 									"",
-									"    //age range validation",
-									"    pm.expect(responseJSON.data).has.property('age_range');",
+									"    //age_range validation",
+									"     pm.expect(responseJSON.data).has.property('age_range');",
 									"    pm.expect(responseJSON.data).has.property('age_range').is.string;",
 									"    pm.expect(responseJSON.data.age_range).to.be.oneOf([\"18-35\",\"35-55\",\"55+\"]);",
 									"    ",
-									"    //phone number validation",
+									"});",
+									"",
+									"pm.test(\"Data object Structure is valid - phone_number\",function(){",
+									"",
+									"    //phone_number validation",
 									"    pm.expect(responseJSON.data).has.property('phone');",
 									"    pm.expect(responseJSON.data).has.property('phone').is.string;",
 									"    pm.expect(responseJSON.data.phone).to.match(/[\\+1\\s]*\\-?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}/);",
+									"    ",
+									"});",
+									"",
+									"",
+									"pm.test(\"Data object Structure is valid - city\",function(){",
 									"",
 									"    //city validation",
 									"    pm.expect(responseJSON.data).has.property('city');",
 									"    pm.expect(responseJSON.data).has.property('city').is.string;",
+									"    ",
+									"});",
+									"",
+									"pm.test(\"Data object Structure is valid - state\",function(){",
 									"",
 									"    //state validation",
-									"    pm.expect(responseJSON.data).has.property('state');",
+									"   pm.expect(responseJSON.data).has.property('state');",
 									"    pm.expect(responseJSON.data).has.property('state').is.string;",
 									"    pm.expect(responseJSON.data).has.property('state').is.lengthOf(2);",
+									"    ",
+									"});",
+									"",
+									"pm.test(\"Data object Structure is valid - zipcode\",function(){",
 									"",
 									"    //zipcode validation",
 									"    pm.expect(responseJSON.data).has.property('zipcode');",
 									"    pm.expect(responseJSON.data).has.property('zipcode').is.string;",
-									"     pm.expect(responseJSON.data).has.property('zipcode').is.lengthOf(5);",
+									"    pm.expect(responseJSON.data).has.property('zipcode').is.lengthOf(5);",
+									"    ",
+									"});",
 									"",
-									"    //license_front_url validation",
+									"pm.test(\"Data object Structure is valid - license_front_url\",function(){",
+									"",
+									"    //liscense_front_url validation",
 									"    pm.expect(responseJSON.data).has.property('license_front_url');",
 									"    pm.expect(responseJSON.data).has.property('license_front_url').is.string;",
+									"    ",
+									"});",
 									"",
-									"    //license_back_url validation",
+									"pm.test(\"Data object Structure is valid - license_back_url\",function(){",
+									"",
+									"    //liscense_front_back validation",
 									"    pm.expect(responseJSON.data).has.property('license_back_url');",
 									"    pm.expect(responseJSON.data).has.property('license_back_url').is.string;",
+									"    ",
+									"});",
 									"",
-									"    //profile_image_url validation",
+									"pm.test(\"Data object Structure is valid - profile_image_url\",function(){",
+									"",
+									"  //profile_image_url validation",
 									"    pm.expect(responseJSON.data).has.property('profile_image_url');",
 									"    pm.expect(responseJSON.data).has.property('profile_image_url').is.string;",
-									"",
-									"    //boolean validation needs to be added",
-									"    pm.expect(responseJSON.data).has.property('notify_account_status');",
-									"    pm.expect(responseJSON.data).has.property('notify_transactions');",
-									"    pm.expect(responseJSON.data).has.property('notify_campaign_approval');",
-									"    pm.expect(responseJSON.data).has.property('notify_new_campaign');",
-									"",
-									"    //number validations needs to be added",
-									"    pm.expect(responseJSON.data).has.property('current_balance');",
-									"    pm.expect(responseJSON.data).has.property('approved_balance');",
-									"    pm.expect(responseJSON.data).has.property('total_earnings');",
-									"    pm.expect(responseJSON.data).has.property('potential_earnings');",
-									"    pm.expect(responseJSON.data).has.property('privacy');",
-									"    pm.expect(responseJSON.data).has.property('terms');",
-									"    pm.expect(responseJSON.data).has.property('created');",
-									"    pm.expect(responseJSON.data).has.property('modified');",
+									"    ",
 									"});",
 									"",
 									"",
-									"pm.test(\"current_balance, approved_balance, total_earnings, potential_earnings should be valid\",function(){",
-									"    pm.expect(responseJSON.data.current_balance).is.not.null;",
-									"    pm.expect(responseJSON.data.approved_balance).is.not.null;",
-									"    pm.expect(responseJSON.data.total_earnings).is.not.null;",
-									"    pm.expect(responseJSON.data.potential_earnings).is.not.null;",
-									"})",
+									"pm.test(\"Data object Structure is valid - notify_account_status\",function(){",
 									"",
-									"pm.test(\"privacy,terms,created,modified is valid\",function(){",
-									"    pm.expect(responseJSON.data.created).is.greaterThan(0.00);",
-									"    pm.expect(responseJSON.data.privacy).is.greaterThan(0.00);",
-									"    pm.expect(responseJSON.data.terms).is.greaterThan(0.00);",
-									"    pm.expect(responseJSON.data.modified).is.greaterThan(0.00);",
+									"    //notify_account_status validation",
+									"    pm.expect(responseJSON.data).has.property('notify_account_status');",
+									"    pm.expect(responseJSON.data.notify_account_status).to.be.a(\"boolean\");",
+									"    //pm.expect(responseJSON.data.notify_account_status).eql(\"true\");",
+									"    ",
+									"});",
+									"",
+									"pm.test(\"Data object Structure is valid - notify_campaign_approval\",function(){",
+									"",
+									"    //notify_campaign_approval validation",
+									"    pm.expect(responseJSON.data).has.property('notify_campaign_approval');",
+									"    pm.expect(responseJSON.data.notify_campaign_approval).to.be.a(\"boolean\");",
+									"    //pm.expect(responseJSON.data.notify_campaign_approval).eql(\"true\");  ",
+									"});",
+									"",
+									"",
+									"pm.test(\"Data object Structure is valid - notify_new_campaign\",function(){",
+									"",
+									"    //notify_new_campaign validation",
+									"    pm.expect(responseJSON.data).has.property('notify_new_campaign');",
+									"    pm.expect(responseJSON.data.notify_new_campaign).to.be.a(\"boolean\");",
+									"    //pm.expect(responseJSON.data.notify_new_campaign).eql(\"true\");  ",
+									"});",
+									"",
+									"",
+									"pm.test(\"Data object Structure is valid - notify_transactions\",function(){",
+									"",
+									"    //notify_transactions validation",
+									"    pm.expect(responseJSON.data).has.property('notify_transactions');",
+									"    pm.expect(responseJSON.data.notify_transactions).to.be.a(\"boolean\");",
+									"    //pm.expect(responseJSON.data.notify_transactions).eql(\"true\");  ",
+									"});",
+									"",
+									"pm.test(\"Data object Structure is valid - current_balance\",function(){",
+									"",
+									"    //current_balance validation",
+									"    pm.expect(responseJSON.data).has.property('current_balance');",
+									"    pm.expect(responseJSON.data.current_balance).is.not.null;",
+									"    pm.expect(responseJSON.data.current_balance).is.a(\"number\");",
+									"    pm.expect(responseJSON.data.current_balance).to.match(/[+-]?([0-9]*[.])?[0-9]+/)",
+									"",
+									"});",
+									"",
+									"",
+									"",
+									"pm.test(\"Data object Structure is valid - approved_balance\",function(){",
+									"",
+									"    //approved_balance validation",
+									"    pm.expect(responseJSON.data).has.property('approved_balance');",
+									"    pm.expect(responseJSON.data.approved_balance).is.not.null;",
+									"    pm.expect(responseJSON.data.approved_balance).is.a(\"number\");",
+									"    pm.expect(responseJSON.data.approved_balance).to.match(/[+-]?([0-9]*[.])?[0-9]+/)",
+									"",
+									"});",
+									"",
+									"pm.test(\"Data object Structure is valid - total_earnings\",function(){",
+									"",
+									"    //total_earnings validation",
+									"    pm.expect(responseJSON.data).has.property('total_earnings');",
+									"    pm.expect(responseJSON.data.total_earnings).is.not.null;",
+									"    pm.expect(responseJSON.data.total_earnings).is.a(\"number\");",
+									"    pm.expect(responseJSON.data.total_earnings).to.match(/[+-]?([0-9]*[.])?[0-9]+/)",
+									"",
+									"});",
+									"",
+									"pm.test(\"Data object Structure is valid - potential_earnings\",function(){",
+									"",
+									"    //potential_earnings validation",
+									"    pm.expect(responseJSON.data).has.property('potential_earnings');",
+									"    pm.expect(responseJSON.data.potential_earnings).is.not.null;",
+									"    pm.expect(responseJSON.data.potential_earnings).is.a(\"number\");",
+									"    pm.expect(responseJSON.data.potential_earnings).to.match(/[+-]?([0-9]*[.])?[0-9]+/)",
+									"",
+									"});",
+									"",
+									"pm.test(\"Data object Structure is valid - status\",function(){",
+									"",
+									"    //status validation",
+									"    pm.expect(responseJSON.data).has.property('status');",
+									"    pm.expect(responseJSON.data).has.property('status').is.string;",
+									"    pm.expect(responseJSON.data.affiliation).to.be.oneOf([\"verification-pending\", \"verification-failed\", \"deactivated\",\"verified\"]);",
+									"",
+									"});",
+									"",
+									"",
+									"pm.test(\"Data object structure is valid-privacy\", function () {",
+									"",
+									"//privacy validation",
+									"    var privacyValue=responseJSON.data.privacy;",
+									"    if(privacyValue != null)",
+									"    {",
+									"        console.log(\"User has accepted the privacy terms\");",
+									"        pm.expect(privacyValue).is.a(\"number\")",
+									"        pm.expect(privacyValue).to.be.above(0);  ",
+									"    }",
+									"    else",
+									"    {",
+									"       console.log(\"User has not accepted the privacy terms\");",
+									"       pm.expect(privacyValue).is.null;",
+									"       ",
+									"    }",
+									"});",
+									"",
+									"",
+									"pm.test(\"Data object structure is valid-terms\", function () {",
+									"",
+									"//terms validation",
+									"    var termsValue=responseJSON.data.terms;",
+									"    if(termsValue != null)",
+									"    {",
+									"        console.log(\"User has accepted the terms\");",
+									"        pm.expect(termsValue).is.a(\"number\")",
+									"        pm.expect(termsValue).to.be.above(0);  ",
+									"    }",
+									"    else",
+									"    {",
+									"       console.log(\"User has not accepted the terms\");",
+									"       pm.expect(privacyValue).is.null;",
+									"       ",
+									"    }",
+									"});",
+									"",
+									"pm.test(\"created,modified is valid\",function(){",
+									"   ",
+									"    //Created,Modified validation",
+									"",
+									"    pm.expect(responseJSON.data.created).is.above(0);",
+									"    pm.expect(responseJSON.data.modified).is.above(0);",
 									"})",
 									""
 								],
-								"type": "text/javascript",
-								"id": "a95db5e7-b3ca-4122-a66c-8b8ab1866b3b"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -1442,11 +1860,15 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/profile",
+									"raw": "https://api.canvass.dev/v1/profile",
+									"protocol": "https",
 									"host": [
-										"{{baseUrl}}"
+										"api",
+										"canvass",
+										"dev"
 									],
 									"path": [
+										"v1",
 										"profile"
 									]
 								}
@@ -1466,11 +1888,12 @@
 					]
 				},
 				{
-					"name": "Update Profile",
+					"name": "Update Profile-Positive",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
+								"id": "7f7c7e36-d533-4cdf-bf7e-1adeaf3a6d31",
 								"exec": [
 									"var responseJSON = pm.response.json();",
 									"",
@@ -1480,116 +1903,277 @@
 									"",
 									"pm.test(\"Response body structure is valid\", function () {",
 									"    pm.expect(responseJSON).to.be.an('object').that.has.property('data');",
+									"    pm.expect(responseJSON.data).to.be.an('object');",
+									"    pm.expect(responseJSON.data).to.be.an('object').is.not.null;",
+									"",
 									"});",
 									"",
-									"pm.test(\"Data object structure is valid\", function () {",
 									"",
-									"    //id validation",
+									"pm.test(\"Data object Structure is valid - ID\",function(){",
+									"",
+									"//id validation",
 									"    pm.expect(responseJSON.data).has.property('id');",
 									"    pm.expect(responseJSON.data).has.property('id').is.not.null;",
 									"",
-									"    //email validation",
-									"    pm.expect(responseJSON.data).has.property('email');",
+									"});",
+									"",
+									"",
+									"pm.test(\"Data object Structure is valid - email\",function(){",
+									"",
+									"//email validation",
+									"   pm.expect(responseJSON.data).has.property('email');",
 									"    pm.expect(responseJSON.data).has.property('email').is.not.null;",
 									"    pm.expect(responseJSON.data).has.property('email').is.string;",
-									"    pm.expect(responseJSON.data.email).to.include('@');",
-									"    pm.expect(responseJSON.data.email).to.include('.com');",
-									"    ",
+									"    pm.expect(responseJSON.data.email).to.match(/^[a-z0-9]+@[a-z]+\\.[a-z]{2,3}/);",
+									"});",
 									"",
-									"    //username validation",
+									"pm.test(\"Data object Structure is valid - username\",function(){",
+									"",
+									"//username validation",
 									"    pm.expect(responseJSON.data).has.property('username');",
 									"    pm.expect(responseJSON.data).has.property('username').is.string;",
+									"",
+									"});",
+									"",
+									"pm.test(\"Data object Structure is valid - first_name\",function(){",
 									"",
 									"    //firstname validation",
 									"    pm.expect(responseJSON.data).has.property('first_name');",
 									"    pm.expect(responseJSON.data).has.property('first_name').is.string;",
+									"    ",
+									"});",
+									"",
+									"pm.test(\"Data object Structure is valid - last_name\",function(){",
 									"",
 									"    //lastname validation",
 									"    pm.expect(responseJSON.data).has.property('last_name');",
 									"    pm.expect(responseJSON.data).has.property('last_name').is.string;",
+									"    ",
+									"});",
+									"",
+									"pm.test(\"Data object Structure is valid - affiliation\",function(){",
 									"",
 									"    //affiliation validation",
 									"    pm.expect(responseJSON.data).has.property('affiliation');",
 									"    pm.expect(responseJSON.data).has.property('affiliation').is.string;",
-									"    pm.expect(responseJSON.data.affiliation).to.be.oneOf([\"democrat\", \"republican\", \"independent\",\"other\"])",
+									"    pm.expect(responseJSON.data.affiliation).to.be.oneOf([\"democrat\", \"republican\", \"independent\",\"other\"]);",
+									"    ",
+									"});",
+									"",
+									"",
+									"pm.test(\"Data object Structure is valid - birth_date\",function(){",
 									"",
 									"    //birthdate validation",
 									"    pm.expect(responseJSON.data).has.property('birth_date');",
 									"    pm.expect(responseJSON.data).has.property('birth_date').is.string;",
 									"    pm.expect(responseJSON.data.birth_date).to.match(/^\\d{4}-\\d{2}-\\d{2}$/);",
+									"    ",
+									"});",
 									"",
+									"pm.test(\"Data object Structure is valid - age_range\",function(){",
 									"",
-									"    //age range validation",
-									"    pm.expect(responseJSON.data).has.property('age_range');",
+									"    //age_range validation",
+									"     pm.expect(responseJSON.data).has.property('age_range');",
 									"    pm.expect(responseJSON.data).has.property('age_range').is.string;",
 									"    pm.expect(responseJSON.data.age_range).to.be.oneOf([\"18-35\",\"35-55\",\"55+\"]);",
 									"    ",
-									"    //phone number validation",
+									"});",
+									"",
+									"pm.test(\"Data object Structure is valid - phone_number\",function(){",
+									"",
+									"    //phone_number validation",
 									"    pm.expect(responseJSON.data).has.property('phone');",
 									"    pm.expect(responseJSON.data).has.property('phone').is.string;",
 									"    pm.expect(responseJSON.data.phone).to.match(/[\\+1\\s]*\\-?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}/);",
+									"    ",
+									"});",
+									"",
+									"",
+									"pm.test(\"Data object Structure is valid - city\",function(){",
 									"",
 									"    //city validation",
 									"    pm.expect(responseJSON.data).has.property('city');",
 									"    pm.expect(responseJSON.data).has.property('city').is.string;",
+									"    ",
+									"});",
+									"",
+									"pm.test(\"Data object Structure is valid - state\",function(){",
 									"",
 									"    //state validation",
-									"    pm.expect(responseJSON.data).has.property('state');",
+									"   pm.expect(responseJSON.data).has.property('state');",
 									"    pm.expect(responseJSON.data).has.property('state').is.string;",
 									"    pm.expect(responseJSON.data).has.property('state').is.lengthOf(2);",
+									"    ",
+									"});",
+									"",
+									"pm.test(\"Data object Structure is valid - zipcode\",function(){",
 									"",
 									"    //zipcode validation",
 									"    pm.expect(responseJSON.data).has.property('zipcode');",
 									"    pm.expect(responseJSON.data).has.property('zipcode').is.string;",
-									"     pm.expect(responseJSON.data).has.property('zipcode').is.lengthOf(5);",
+									"    pm.expect(responseJSON.data).has.property('zipcode').is.lengthOf(5);",
+									"    ",
+									"});",
 									"",
-									"    //license_front_url validation",
+									"pm.test(\"Data object Structure is valid - license_front_url\",function(){",
+									"",
+									"    //liscense_front_url validation",
 									"    pm.expect(responseJSON.data).has.property('license_front_url');",
 									"    pm.expect(responseJSON.data).has.property('license_front_url').is.string;",
+									"    ",
+									"});",
 									"",
-									"    //license_back_url validation",
+									"pm.test(\"Data object Structure is valid - license_back_url\",function(){",
+									"",
+									"    //liscense_front_back validation",
 									"    pm.expect(responseJSON.data).has.property('license_back_url');",
 									"    pm.expect(responseJSON.data).has.property('license_back_url').is.string;",
+									"    ",
+									"});",
 									"",
-									"    //profile_image_url validation",
+									"pm.test(\"Data object Structure is valid - profile_image_url\",function(){",
+									"",
+									"  //profile_image_url validation",
 									"    pm.expect(responseJSON.data).has.property('profile_image_url');",
 									"    pm.expect(responseJSON.data).has.property('profile_image_url').is.string;",
-									"",
-									"    //boolean validation needs to be added",
-									"    pm.expect(responseJSON.data).has.property('notify_account_status');",
-									"    pm.expect(responseJSON.data).has.property('notify_transactions');",
-									"    pm.expect(responseJSON.data).has.property('notify_campaign_approval');",
-									"    pm.expect(responseJSON.data).has.property('notify_new_campaign');",
-									"",
-									"    //number validations needs to be added",
-									"    pm.expect(responseJSON.data).has.property('current_balance');",
-									"    pm.expect(responseJSON.data).has.property('approved_balance');",
-									"    pm.expect(responseJSON.data).has.property('total_earnings');",
-									"    pm.expect(responseJSON.data).has.property('potential_earnings');",
-									"    pm.expect(responseJSON.data).has.property('privacy');",
-									"    pm.expect(responseJSON.data).has.property('terms');",
-									"    pm.expect(responseJSON.data).has.property('created');",
-									"    pm.expect(responseJSON.data).has.property('modified');",
+									"    ",
 									"});",
 									"",
 									"",
-									"pm.test(\"current_balance, approved_balance, total_earnings, potential_earnings should be valid\",function(){",
-									"    pm.expect(responseJSON.data.current_balance).is.not.null;",
-									"    pm.expect(responseJSON.data.approved_balance).is.not.null;",
-									"    pm.expect(responseJSON.data.total_earnings).is.not.null;",
-									"    pm.expect(responseJSON.data.potential_earnings).is.not.null;",
-									"})",
+									"pm.test(\"Data object Structure is valid - notify_account_status\",function(){",
 									"",
-									"pm.test(\"privacy,terms,created,modified is valid\",function(){",
-									"    pm.expect(responseJSON.data.created).is.greaterThan(0.00);",
-									"    pm.expect(responseJSON.data.privacy).is.greaterThan(0.00);",
-									"    pm.expect(responseJSON.data.terms).is.greaterThan(0.00);",
-									"    pm.expect(responseJSON.data.modified).is.greaterThan(0.00);",
+									"    //notify_account_status validation",
+									"    pm.expect(responseJSON.data).has.property('notify_account_status');",
+									"    pm.expect(responseJSON.data.notify_account_status).to.be.a(\"boolean\");",
+									"    //pm.expect(responseJSON.data.notify_account_status).eql(\"true\");",
+									"    ",
+									"});",
+									"",
+									"pm.test(\"Data object Structure is valid - notify_campaign_approval\",function(){",
+									"",
+									"    //notify_campaign_approval validation",
+									"    pm.expect(responseJSON.data).has.property('notify_campaign_approval');",
+									"    pm.expect(responseJSON.data.notify_campaign_approval).to.be.a(\"boolean\");",
+									"    //pm.expect(responseJSON.data.notify_campaign_approval).eql(\"true\");  ",
+									"});",
+									"",
+									"",
+									"pm.test(\"Data object Structure is valid - notify_new_campaign\",function(){",
+									"",
+									"    //notify_new_campaign validation",
+									"    pm.expect(responseJSON.data).has.property('notify_new_campaign');",
+									"    pm.expect(responseJSON.data.notify_new_campaign).to.be.a(\"boolean\");",
+									"    //pm.expect(responseJSON.data.notify_new_campaign).eql(\"true\");  ",
+									"});",
+									"",
+									"",
+									"pm.test(\"Data object Structure is valid - notify_transactions\",function(){",
+									"",
+									"    //notify_transactions validation",
+									"    pm.expect(responseJSON.data).has.property('notify_transactions');",
+									"    pm.expect(responseJSON.data.notify_transactions).to.be.a(\"boolean\");",
+									"    //pm.expect(responseJSON.data.notify_transactions).eql(\"true\");  ",
+									"});",
+									"",
+									"pm.test(\"Data object Structure is valid - current_balance\",function(){",
+									"",
+									"    //current_balance validation",
+									"    pm.expect(responseJSON.data).has.property('current_balance');",
+									"    pm.expect(responseJSON.data.current_balance).is.not.null;",
+									"    pm.expect(responseJSON.data.current_balance).is.a(\"number\");",
+									"    pm.expect(responseJSON.data.current_balance).to.match(/[+-]?([0-9]*[.])?[0-9]+/)",
+									"",
+									"});",
+									"",
+									"",
+									"",
+									"pm.test(\"Data object Structure is valid - approved_balance\",function(){",
+									"",
+									"    //approved_balance validation",
+									"    pm.expect(responseJSON.data).has.property('approved_balance');",
+									"    pm.expect(responseJSON.data.approved_balance).is.not.null;",
+									"    pm.expect(responseJSON.data.approved_balance).is.a(\"number\");",
+									"    pm.expect(responseJSON.data.approved_balance).to.match(/[+-]?([0-9]*[.])?[0-9]+/)",
+									"",
+									"});",
+									"",
+									"pm.test(\"Data object Structure is valid - total_earnings\",function(){",
+									"",
+									"    //total_earnings validation",
+									"    pm.expect(responseJSON.data).has.property('total_earnings');",
+									"    pm.expect(responseJSON.data.total_earnings).is.not.null;",
+									"    pm.expect(responseJSON.data.total_earnings).is.a(\"number\");",
+									"    pm.expect(responseJSON.data.total_earnings).to.match(/[+-]?([0-9]*[.])?[0-9]+/)",
+									"",
+									"});",
+									"",
+									"pm.test(\"Data object Structure is valid - potential_earnings\",function(){",
+									"",
+									"    //potential_earnings validation",
+									"    pm.expect(responseJSON.data).has.property('potential_earnings');",
+									"    pm.expect(responseJSON.data.potential_earnings).is.not.null;",
+									"    pm.expect(responseJSON.data.potential_earnings).is.a(\"number\");",
+									"    pm.expect(responseJSON.data.potential_earnings).to.match(/[+-]?([0-9]*[.])?[0-9]+/)",
+									"",
+									"});",
+									"",
+									"pm.test(\"Data object Structure is valid - status\",function(){",
+									"",
+									"    //status validation",
+									"    pm.expect(responseJSON.data).has.property('status');",
+									"    pm.expect(responseJSON.data).has.property('status').is.string;",
+									"    pm.expect(responseJSON.data.affiliation).to.be.oneOf([\"verification-pending\", \"verification-failed\", \"deactivated\",\"verified\"]);",
+									"",
+									"});",
+									"",
+									"",
+									"pm.test(\"Data object structure is valid-privacy\", function () {",
+									"",
+									"//privacy validation",
+									"    var privacyValue=responseJSON.data.privacy;",
+									"    if(privacyValue != null)",
+									"    {",
+									"        console.log(\"User has accepted the privacy terms\");",
+									"        pm.expect(privacyValue).is.a(\"number\")",
+									"        pm.expect(privacyValue).to.be.above(0);  ",
+									"    }",
+									"    else",
+									"    {",
+									"       console.log(\"User has not accepted the privacy terms\");",
+									"       pm.expect(privacyValue).is.null;",
+									"       ",
+									"    }",
+									"});",
+									"",
+									"",
+									"pm.test(\"Data object structure is valid-terms\", function () {",
+									"",
+									"//terms validation",
+									"    var termsValue=responseJSON.data.terms;",
+									"    if(termsValue != null)",
+									"    {",
+									"        console.log(\"User has accepted the terms\");",
+									"        pm.expect(termsValue).is.a(\"number\")",
+									"        pm.expect(termsValue).to.be.above(0);  ",
+									"    }",
+									"    else",
+									"    {",
+									"       console.log(\"User has not accepted the terms\");",
+									"       pm.expect(privacyValue).is.null;",
+									"       ",
+									"    }",
+									"});",
+									"",
+									"pm.test(\"created,modified is valid\",function(){",
+									"   ",
+									"    //Created,Modified validation",
+									"",
+									"    pm.expect(responseJSON.data.created).is.above(0);",
+									"    pm.expect(responseJSON.data.modified).is.above(0);",
 									"})",
 									""
 								],
-								"type": "text/javascript",
-								"id": "7f7c7e36-d533-4cdf-bf7e-1adeaf3a6d31"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -1672,11 +2256,15 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/profile",
+									"raw": "https://api.canvass.dev/v1/profile",
+									"protocol": "https",
 									"host": [
-										"{{baseUrl}}"
+										"api",
+										"canvass",
+										"dev"
 									],
 									"path": [
+										"v1",
 										"profile"
 									]
 								}
@@ -1695,6 +2283,174 @@
 						},
 						{
 							"id": "f572d0b8-24b8-48b3-9cf2-c203cf44b16f",
+							"name": "Validation exception. Malformed request body.",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"description": "Added as a part of security scheme: bearer",
+										"key": "Authorization",
+										"value": "Bearer <token>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": \"<uuid>\",\n  \"email\": \"<email>\",\n  \"username\": \"<string>\",\n  \"affiliation\": \"democrat\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"age_range\": \"18-35\",\n  \"birth_date\": \"<date>\",\n  \"phone\": \" ﻿326)337\\t5022\",\n  \"city\": \"<string>\",\n  \"state\": \"<string>\",\n  \"zipcode\": \"<string>\",\n  \"timezone\": \"\",\n  \"license_front_url\": \"<string>\",\n  \"license_back_url\": \"<string>\",\n  \"profile_image_url\": \"<string>\",\n  \"privacy\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  },\n  \"terms\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  },\n  \"status\": \"verification-pending\",\n  \"current_balance\": \"<float>\",\n  \"approved_balance\": \"<float>\",\n  \"total_earnings\": \"<float>\",\n  \"potential_earnings\": \"<float>\",\n  \"notify_account_status\": true,\n  \"notify_transactions\": true,\n  \"notify_campaign_approval\": true,\n  \"notify_new_campaign\": true,\n  \"created\": \"<long>\",\n  \"modified\": \"<long>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/profile",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"profile"
+									]
+								}
+							},
+							"status": "Not Acceptable",
+							"code": 406,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Update Profile-Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7f7c7e36-d533-4cdf-bf7e-1adeaf3a6d31",
+								"exec": [
+									"var responseJSON = pm.response.json();",
+									"",
+									"pm.test(\"Response status code is 406\", function () {",
+									"    pm.response.to.have.status(406);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "f2dce6bf-6062-4589-9d5a-2aa5f274cec4",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"ab626c74-4e6a-42b1-bd47-8a99f594ea62\",\n  \"email\": \"fernando.update@gmail.com\",\n  \"username\": \"FernadoMaster\",\n  \"affiliation\": \"democrat\",\n  \"first_name\": \"Fernado\",\n  \"last_name\": \"Castillo\",\n  \"age_range\": \"18-35\",\n  \"birth_date\": \"1983-12-28\",\n  \"phone\": \"771298812\",\n  \"city\": \"Bengalore\",\n  \"state\": \"Karnataka\",\n  \"zipcode\": \"712671\",\n  \"timezone\": \"IST\",\n  \"license_front_url\": \"www.testUpdate.com/fronURL\",\n  \"license_back_url\": \"www.testupdate.com/backURL\",\n  \"profile_image_url\": \"testImage\",\n  \"privacy\": true\n  \"terms\": false\n  \"status\": \"verification-pending\",\n  \"current_balance\": \"-1000\",\n  \"approved_balance\": \"44000\",\n  \"total_earnings\": \"50000\",\n  \"potential_earnings\": \"650000\",\n  \"notify_account_status\": true,\n  \"notify_transactions\": true,\n  \"notify_campaign_approval\": true,\n  \"notify_new_campaign\": true,\n  \"created\": \"<long>\",\n  \"modified\": \"<long>\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/profile",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"profile"
+							]
+						},
+						"description": "Update the user's profile data."
+					},
+					"response": [
+						{
+							"id": "b0efc94e-b7f7-4744-a8ba-f3fa713a1c91",
+							"name": "Profile updated",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"description": "Added as a part of security scheme: bearer",
+										"key": "Authorization",
+										"value": "Bearer <token>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": \"<uuid>\",\n  \"email\": \"<email>\",\n  \"username\": \"<string>\",\n  \"affiliation\": \"democrat\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"age_range\": \"18-35\",\n  \"birth_date\": \"<date>\",\n  \"phone\": \" ﻿326)337\\t5022\",\n  \"city\": \"<string>\",\n  \"state\": \"<string>\",\n  \"zipcode\": \"<string>\",\n  \"timezone\": \"\",\n  \"license_front_url\": \"<string>\",\n  \"license_back_url\": \"<string>\",\n  \"profile_image_url\": \"<string>\",\n  \"privacy\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  },\n  \"terms\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  },\n  \"status\": \"verification-pending\",\n  \"current_balance\": \"<float>\",\n  \"approved_balance\": \"<float>\",\n  \"total_earnings\": \"<float>\",\n  \"potential_earnings\": \"<float>\",\n  \"notify_account_status\": true,\n  \"notify_transactions\": true,\n  \"notify_campaign_approval\": true,\n  \"notify_new_campaign\": true,\n  \"created\": \"<long>\",\n  \"modified\": \"<long>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://api.canvass.dev/v1/profile",
+									"protocol": "https",
+									"host": [
+										"api",
+										"canvass",
+										"dev"
+									],
+									"path": [
+										"v1",
+										"profile"
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"data\": {\n    \"id\": \"<uuid>\",\n    \"email\": \"<email>\",\n    \"username\": \"<string>\",\n    \"affiliation\": \"democrat\",\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"age_range\": \"35-55\",\n    \"birth_date\": \"<date>\",\n    \"phone\": \"\\r\\r  +-856)333 8827\",\n    \"city\": \"<string>\",\n    \"state\": \"<string>\",\n    \"zipcode\": \"<string>\",\n    \"timezone\": \"\",\n    \"license_front_url\": \"<string>\",\n    \"license_back_url\": \"<string>\",\n    \"profile_image_url\": \"<string>\",\n    \"privacy\": {\n      \"value\": \"<Error: Could not resolve allOf schema\"\n    },\n    \"terms\": {\n      \"value\": \"<Error: Could not resolve allOf schema\"\n    },\n    \"status\": \"deactivated\",\n    \"current_balance\": \"<float>\",\n    \"approved_balance\": \"<float>\",\n    \"total_earnings\": \"<float>\",\n    \"potential_earnings\": \"<float>\",\n    \"notify_account_status\": true,\n    \"notify_transactions\": true,\n    \"notify_campaign_approval\": true,\n    \"notify_new_campaign\": true,\n    \"created\": \"<long>\",\n    \"modified\": \"<long>\"\n  }\n}"
+						},
+						{
+							"id": "baba2eea-01fd-4427-9ede-d839fedbe50c",
 							"name": "Validation exception. Malformed request body.",
 							"originalRequest": {
 								"method": "PATCH",
@@ -1805,11 +2561,15 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/profile",
+									"raw": "https://api.canvass.dev/v1/profile",
+									"protocol": "https",
 									"host": [
-										"{{baseUrl}}"
+										"api",
+										"canvass",
+										"dev"
 									],
 									"path": [
+										"v1",
 										"profile"
 									]
 								}
@@ -16806,6 +17566,26 @@
 				}
 			],
 			"id": "32a300ca-190e-41fa-b30c-194e657655a5"
+		},
+		{
+			"name": "New Request",
+			"id": "d61027b9-501b-4ed5-9030-f939ffe8fd00",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://example.com",
+					"protocol": "https",
+					"host": [
+						"example",
+						"com"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [

@@ -15,5 +15,8 @@ files[] = {"id":"28863956-a8c4b681-894a-49cc-a757-2f637e8ec8bc","path":"MyCanvas
 
 [config.relations.apiDefinition]
 rootDirectory = postman/schemas
+files[] = {"path":"mycanvass_openapi.yaml","metaData":{}}
 
 [config.relations.apiDefinition.metaData]
+type = openapi:3
+rootFiles[] = mycanvass_openapi.yaml
