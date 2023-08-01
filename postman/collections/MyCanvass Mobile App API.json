@@ -16806,6 +16806,26 @@
 				}
 			],
 			"id": "32a300ca-190e-41fa-b30c-194e657655a5"
+		},
+		{
+			"name": "New Request",
+			"id": "d61027b9-501b-4ed5-9030-f939ffe8fd00",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://example.com",
+					"protocol": "https",
+					"host": [
+						"example",
+						"com"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
