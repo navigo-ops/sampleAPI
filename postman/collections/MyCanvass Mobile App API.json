@@ -14,7 +14,44 @@
 					"name": "resend",
 					"item": [
 						{
-							"name": "Resends the SMS 2FA code",
+							"name": "Resends the SMS 2FA-Positive",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "62e383df-1533-4e5e-b4a8-d1810987a040",
+										"exec": [
+											"var responseJSON = pm.response.json();",
+											"",
+											"pm.test(\"Response status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"//tests",
+											"pm.test(\"Response body structure is valid\", function () {",
+											"    pm.expect(responseJSON).to.be.an('object').that.has.property('data');",
+											"});",
+											"",
+											"pm.test(\"Data object structure -unique_id-is valid\", function () {",
+											"",
+											"    //unique_id validation",
+											"    pm.expect(responseJSON.data).has.property('unique_id');",
+											"    pm.expect(responseJSON.data).has.property('unique_id').is.string;",
+											"    pm.expect(responseJSON.data).has.property('unique_id').is.not.null;",
+											"})",
+											"",
+											"pm.test(\"Data object structure -expires-is valid\", function () {",
+											"        //expires validation",
+											"    pm.expect(responseJSON.data).has.property('expires');",
+											"    pm.expect(responseJSON.data).has.property('expires').is.string;",
+											"    pm.expect(responseJSON.data).has.property('expires').is.not.null;",
+											"    pm.expect(responseJSON.data).has.property('expires').is.above(0);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"id": "c79f4458-7fdc-4e6e-a82b-a7c9cf1468eb",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
@@ -33,7 +70,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"phone\": \"<string>\"\n}",
+									"raw": "{\n  \"phone\": \"702-805-9093\"\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -107,6 +144,117 @@
 									"body": "{\n  \"unique_id\": \"<string>\",\n  \"expiration\": \"<number>\"\n}"
 								}
 							]
+						},
+						{
+							"name": "Resends the SMS 2FA code-Negative",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "62e383df-1533-4e5e-b4a8-d1810987a040",
+										"exec": [
+											"var responseJSON = pm.response.json();",
+											"",
+											"pm.test(\"Response status code is 422\", function () {",
+											"    pm.response.to.have.status(422);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "77dd9c3a-75c0-44aa-a288-bd15f2ce7385",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"phone\": \"702-805-9093\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/verify/resend",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"verify",
+										"resend"
+									]
+								},
+								"description": "Resend a 2FA authentication code"
+							},
+							"response": [
+								{
+									"id": "48b0d1ef-31d3-4058-b4ac-7c594518053a",
+									"name": "Operation Initiated",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"phone\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://api.canvass.dev/v1/verify/resend",
+											"protocol": "https",
+											"host": [
+												"api",
+												"canvass",
+												"dev"
+											],
+											"path": [
+												"v1",
+												"verify",
+												"resend"
+											]
+										}
+									},
+									"status": "Accepted",
+									"code": 202,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"unique_id\": \"<string>\",\n  \"expiration\": \"<number>\"\n}"
+								}
+							]
 						}
 					],
 					"id": "7b7c0e3f-4088-4336-b6d9-2a703c2776ea"
@@ -115,11 +263,12 @@
 					"name": "confirm",
 					"item": [
 						{
-							"name": "Confirm the 2FA code",
+							"name": "Confirm the 2FA code-Positive",
 							"event": [
 								{
 									"listen": "test",
 									"script": {
+										"id": "3159164b-85a4-4c26-ad05-ed7149d0aec6",
 										"exec": [
 											"// Retrieve the JSON data from the response body of the API call.",
 											"var jsonData = pm.response.json();",
@@ -146,24 +295,27 @@
 											"    pm.expect(responseJSON).to.be.an('object').that.has.property('data');",
 											"});",
 											"",
-											"pm.test(\"Data object structure is valid\", function () {",
+											"pm.test(\"Data object structure -access_token is valid\", function () {",
 											"",
 											"    //unique_id validation",
-											"    pm.expect(responseJSON.data).has.property('unique_id');",
-											"    pm.expect(responseJSON.data).has.property('unique_id').is.string;",
-											"    pm.expect(responseJSON.data).has.property('unique_id').is.not.null;",
+											"    pm.expect(responseJSON.data).has.property('access_token');",
+											"    pm.expect(responseJSON.data).has.property('access_token').is.string;",
+											"    pm.expect(responseJSON.data).has.property('access_token').is.not.null;",
 											"",
+											"});",
+											"",
+											"pm.test(\"Data object structure -expires_at is valid\", function () {",
 											"",
 											"    //expires validation",
-											"    pm.expect(responseJSON.data).has.property('expires');",
-											"    pm.expect(responseJSON.data).has.property('expires').is.string;",
-											"    pm.expect(responseJSON.data).has.property('expires').is.not.null;",
-											"    pm.expect(responseJSON.data).has.property('expires').is.greaterThan(0);",
+											"    pm.expect(responseJSON.data).has.property('expires_at');",
+											"    pm.expect(responseJSON.data).has.property('expires_at').is.string;",
+											"    pm.expect(responseJSON.data).has.property('expires_at').is.not.null;",
+											"    pm.expect(responseJSON.data).has.property('expires_at').is.above(0);",
 											"",
-											"})"
+											"});",
+											""
 										],
-										"type": "text/javascript",
-										"id": "3159164b-85a4-4c26-ad05-ed7149d0aec6"
+										"type": "text/javascript"
 									}
 								}
 							],
@@ -195,7 +347,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"code\": \"059093\",\n  \"unique_id\": \"be54fb5e-6c99-4ebb-810b-ea9c1a54743d\"\n}",
+									"raw": "{\n  \"code\": \"059093\",\n  \"unique_id\": \"{{tokenUniqueId}}\"\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -308,6 +460,164 @@
 									"body": ""
 								}
 							]
+						},
+						{
+							"name": "Confirm the 2FA code-Negative",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "3159164b-85a4-4c26-ad05-ed7149d0aec6",
+										"exec": [
+											"pm.test(\"Response status code is 422\", function () {",
+											"    pm.response.to.have.status(422);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "73a6a1bc-73e4-4d53-aef5-985588e85c2d",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"code\": \"\" ,\n  \"unique_id\":\"\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/verify/confirm",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"verify",
+										"confirm"
+									]
+								},
+								"description": "Once the user has received the code it is provided here to confirm their Authentication."
+							},
+							"response": [
+								{
+									"id": "0ca96d5e-8942-4ac1-8419-31847b8adbce",
+									"name": "Operation Initiated",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"code\": \"<number>\",\n  \"unique_id\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://api.canvass.dev/v1/verify/confirm",
+											"protocol": "https",
+											"host": [
+												"api",
+												"canvass",
+												"dev"
+											],
+											"path": [
+												"v1",
+												"verify",
+												"confirm"
+											]
+										}
+									},
+									"status": "Accepted",
+									"code": 202,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"access_token\": \"<string>\",\n  \"refresh_token\": \"<string>\"\n}"
+								},
+								{
+									"id": "49d8b0a9-57e3-46be-af0d-92b9274e271b",
+									"name": "Invalid entry. Unprocessable Entity.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"code\": \"<number>\",\n  \"unique_id\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/verify/confirm",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"verify",
+												"confirm"
+											]
+										}
+									},
+									"status": "Not Acceptable",
+									"code": 406,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
 						}
 					],
 					"id": "35003bcd-6629-4119-88bf-4d0b8fa44be5"
@@ -318,35 +628,42 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "99a4cef9-12d4-4475-8d7c-626aecc7f5ae",
 								"exec": [
-									"var responseJSON = pm.response.json();",
+									"//validate first that the response code is coming correct",
 									"",
 									"pm.test(\"Response status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
 									"});",
 									"",
+									"//set the env varaible to generate the token",
+									"var responseJSON = pm.response.json();",
+									"var uniqueID=responseJSON.data.unique_id;",
+									"pm.environment.set('tokenUniqueId',uniqueID);",
+									"",
+									"",
+									"//tests",
 									"pm.test(\"Response body structure is valid\", function () {",
 									"    pm.expect(responseJSON).to.be.an('object').that.has.property('data');",
 									"});",
 									"",
-									"pm.test(\"Data object structure is valid\", function () {",
+									"pm.test(\"Data object structure -unique_id-is valid\", function () {",
 									"",
 									"    //unique_id validation",
 									"    pm.expect(responseJSON.data).has.property('unique_id');",
 									"    pm.expect(responseJSON.data).has.property('unique_id').is.string;",
 									"    pm.expect(responseJSON.data).has.property('unique_id').is.not.null;",
+									"})",
 									"",
-									"",
-									"    //expires validation",
+									"pm.test(\"Data object structure -expires-is valid\", function () {",
+									"        //expires validation",
 									"    pm.expect(responseJSON.data).has.property('expires');",
 									"    pm.expect(responseJSON.data).has.property('expires').is.string;",
 									"    pm.expect(responseJSON.data).has.property('expires').is.not.null;",
-									"    pm.expect(responseJSON.data).has.property('expires').is.greaterThan(0);",
-									"",
+									"    pm.expect(responseJSON.data).has.property('expires').is.above(0);",
 									"})"
 								],
-								"type": "text/javascript",
-								"id": "99a4cef9-12d4-4475-8d7c-626aecc7f5ae"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -457,8 +774,10 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "d4031bbd-2822-4f21-9191-0ca1c207d477",
 								"exec": [
 									"var responseJSON = pm.response.json();",
+									"console.log(pm.variables.get(\"phone\"))",
 									"",
 									"pm.test(\"Response status code is 422\", function () {",
 									"    pm.response.to.have.status(422);",
@@ -486,8 +805,7 @@
 									"",
 									"console.log(responseJSON.message)"
 								],
-								"type": "text/javascript",
-								"id": "d4031bbd-2822-4f21-9191-0ca1c207d477"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -519,7 +837,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"phone\": \"abcd\"\n}",
+							"raw": "{\n  \"phone\": \"55126\"\n}",
 							"options": {
 								"raw": {
 									"headerFamily": "json",
@@ -2598,6 +2916,7 @@
 								{
 									"listen": "test",
 									"script": {
+										"id": "3e6c9c1b-816b-426a-b3e7-0f95e184dc18",
 										"exec": [
 											"var responseJSON = pm.response.json();",
 											"",
@@ -2625,8 +2944,7 @@
 											"",
 											"})"
 										],
-										"type": "text/javascript",
-										"id": "3e6c9c1b-816b-426a-b3e7-0f95e184dc18"
+										"type": "text/javascript"
 									}
 								}
 							],
@@ -2644,7 +2962,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"code\": \"059093\",\n  \"unique_id\": \"8dad6560-3428-4f0b-b364-30ac44c7cc03\"\n}",
+									"raw": "{\n  \"code\": \"059093\",\n  \"unique_id\": \"{{phoneConfirmUniqueToken}}\"\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -2715,8 +3033,13 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "540ec933-9e06-4ea8-9d04-63d14feb82a3",
 								"exec": [
 									"var responseJSON = pm.response.json();",
+									"var phoneConfirmUniqueToken=pm.response.json.data.unique_id;",
+									"pm.environment.set('phoneConfirmUniqueToken',phoneConfirmUniqueToken);",
+									"",
+									"",
 									"",
 									"pm.test(\"Response status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -2726,24 +3049,27 @@
 									"    pm.expect(responseJSON).to.be.an('object').that.has.property('data');",
 									"});",
 									"",
-									"pm.test(\"Data object structure is valid\", function () {",
+									"pm.test(\"Data object structure -unique_id-is valid\", function () {",
 									"",
 									"    //unique_id validation",
 									"    pm.expect(responseJSON.data).has.property('unique_id');",
 									"    pm.expect(responseJSON.data).has.property('unique_id').is.string;",
 									"    pm.expect(responseJSON.data).has.property('unique_id').is.not.null;",
 									"",
+									"});",
+									"",
+									"",
+									"pm.test(\"Data object structure -unique_id-is valid\", function () {",
 									"",
 									"    //expires validation",
 									"    pm.expect(responseJSON.data).has.property('expires');",
 									"    pm.expect(responseJSON.data).has.property('expires').is.string;",
 									"    pm.expect(responseJSON.data).has.property('expires').is.not.null;",
-									"    pm.expect(responseJSON.data).has.property('expires').is.greaterThan(0);",
+									"    pm.expect(responseJSON.data).has.property('expires').is.above(0);",
 									"",
 									"})"
 								],
-								"type": "text/javascript",
-								"id": "540ec933-9e06-4ea8-9d04-63d14feb82a3"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -2775,7 +3101,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"phone\": \"<string>\"\n}",
+							"raw": "{\n  \"phone\": \"702-805-9093\"\n}",
 							"options": {
 								"raw": {
 									"headerFamily": "json",
@@ -2992,6 +3318,7 @@
 								{
 									"listen": "test",
 									"script": {
+										"id": "da54efe9-e651-4667-85d2-c8d335eb81cd",
 										"exec": [
 											"var responseJSON = pm.response.json();",
 											"",
@@ -3003,8 +3330,7 @@
 											"    pm.expect(responseJSON.message).is.eql(\"Change accepted\")",
 											"})"
 										],
-										"type": "text/javascript",
-										"id": "da54efe9-e651-4667-85d2-c8d335eb81cd"
+										"type": "text/javascript"
 									}
 								}
 							],
@@ -3022,7 +3348,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"code\": \"782131\"\n}",
+									"raw": "{\n  \"code\": \"{{changeEmailCode}}\"\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -3188,8 +3514,11 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "ef85cb65-3242-46bc-830f-7f2b68539f80",
 								"exec": [
 									"var responseJSON = pm.response.json();",
+									"var changeEmailCode=responseJSON.data.code;",
+									"pm.environment.set('changeEmailCode',changeEmailCode);",
 									"",
 									"pm.test(\"Response status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -3200,7 +3529,7 @@
 									"    pm.expect(responseJSON.data).to.be.an('object');",
 									"});",
 									"",
-									"pm.test(\"Data object structure is valid\", function () {",
+									"pm.test(\"Data object structure - code- is valid\", function () {",
 									"",
 									"     //-data types are number but its coming string   ",
 									"    //code validation ",
@@ -3209,6 +3538,9 @@
 									"    pm.expect(responseJSON.data).has.property('code').is.not.null;",
 									"    //pm.expect(responseJSON.data).has.property('code').is.above(0);",
 									"",
+									"});",
+									"",
+									"pm.test(\"Data object structure -unique_id-is valid\", function () {",
 									"",
 									"    //unique_id validation",
 									"    pm.expect(responseJSON.data).has.property('unique_id');",
@@ -3216,16 +3548,19 @@
 									"    pm.expect(responseJSON.data).has.property('unique_id').is.not.null;",
 									"    //pm.expect(responseJSON.data).has.property('unique_id').is.greaterThan(0);",
 									"",
+									"})",
+									"",
+									"pm.test(\"Data object structure is -expires-valid\", function () {",
+									"",
 									"    //expires validation",
 									"     pm.expect(responseJSON.data).has.property('expires');",
 									"    pm.expect(responseJSON.data).has.property('expires').is.string;",
 									"    pm.expect(responseJSON.data).has.property('expires').is.not.null;",
-									"   //pm.expect(responseJSON.data).has.property('expires').is.greaterThan(0);",
+									"   pm.expect(responseJSON.data).has.property('expires').is.above(0);",
 									"",
-									"})"
+									"});"
 								],
-								"type": "text/javascript",
-								"id": "ef85cb65-3242-46bc-830f-7f2b68539f80"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -3337,6 +3672,7 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "41d77240-7a19-4ead-a8cd-efc7f4924b53",
 								"exec": [
 									"var responseJSON = pm.response.json();",
 									"",
@@ -3347,13 +3683,9 @@
 									"pm.test(\"Failure Messgae - Email Is Null\", function(){",
 									"    pm.expect(responseJSON.message).is.eql(\"The email field is required.\")",
 									"})",
-									"",
-									"pm.test(\"Failure Messgae - Invalid\", function(){",
-									"    pm.expect(responseJSON.message).is.eql(\"Invalid phone number.\")",
-									"})"
+									""
 								],
-								"type": "text/javascript",
-								"id": "41d77240-7a19-4ead-a8cd-efc7f4924b53"
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -4559,6 +4891,7 @@
 								{
 									"listen": "test",
 									"script": {
+										"id": "c307b04a-8db4-4887-9ef2-ea85c7932052",
 										"exec": [
 											"var responseJSON = pm.response.json();",
 											"",
@@ -4639,7 +4972,7 @@
 											"",
 											"",
 											"// Test the meta object-total-structure and properties",
-											"pm.test(\"Meta object structure is valid\", function () {",
+											"pm.test(\"Meta object structure-total-is valid\", function () {",
 											"    pm.expect(responseJSON.meta).to.be.an('object');",
 											"",
 											"    pm.expect(responseJSON.meta).to.have.property('pagination');",
@@ -4653,7 +4986,7 @@
 											"});",
 											"",
 											"// Test the meta object-count-structure and properties",
-											"pm.test(\"Meta object structure is valid\", function () {",
+											"pm.test(\"Meta object structure-count-is valid\", function () {",
 											"    pm.expect(responseJSON.meta).to.be.an('object');",
 											"",
 											"    pm.expect(responseJSON.meta).to.have.property('pagination');",
@@ -4667,7 +5000,7 @@
 											"});",
 											"",
 											"// Test the meta object-per_page-structure and properties",
-											"pm.test(\"Meta object structure is valid\", function () {",
+											"pm.test(\"Meta object structure-per_page-is valid\", function () {",
 											"    pm.expect(responseJSON.meta).to.be.an('object');",
 											"",
 											"    pm.expect(responseJSON.meta).to.have.property('pagination');",
@@ -4683,7 +5016,7 @@
 											"",
 											"",
 											"// Test the meta object-current_page-structure and properties",
-											"pm.test(\"Meta object structure is valid\", function () {",
+											"pm.test(\"Meta object structure-current_page-is valid\", function () {",
 											"    pm.expect(responseJSON.meta).to.be.an('object');",
 											"",
 											"    pm.expect(responseJSON.meta).to.have.property('pagination');",
@@ -4698,7 +5031,7 @@
 											"",
 											"",
 											"// Test the meta object-total_pages-structure and properties",
-											"pm.test(\"Meta object structure is valid\", function () {",
+											"pm.test(\"Meta object structure-total_pages-is valid\", function () {",
 											"    pm.expect(responseJSON.meta).to.be.an('object');",
 											"",
 											"    pm.expect(responseJSON.meta).to.have.property('pagination');",
@@ -4714,7 +5047,7 @@
 											"});",
 											"",
 											"// Test the meta object-total_pages-structure and properties",
-											"pm.test(\"Meta object structure is valid\", function () {",
+											"pm.test(\"Meta object structure-link- is valid\", function () {",
 											"    pm.expect(responseJSON.meta).to.be.an('object');",
 											"",
 											"    pm.expect(responseJSON.meta).to.have.property('pagination');",
@@ -4729,8 +5062,7 @@
 											"",
 											""
 										],
-										"type": "text/javascript",
-										"id": "c307b04a-8db4-4887-9ef2-ea85c7932052"
+										"type": "text/javascript"
 									}
 								}
 							],
@@ -5056,6 +5388,7 @@
 								{
 									"listen": "test",
 									"script": {
+										"id": "20f5fd6f-cf98-43c1-8cf8-f3ca891b1898",
 										"exec": [
 											"var responseJSON = pm.response.json();",
 											"",
@@ -5148,7 +5481,7 @@
 											"",
 											"",
 											"// Test the meta object-total-structure and properties",
-											"pm.test(\"Meta object structure is valid\", function () {",
+											"pm.test(\"Meta object structure -total-is valid\", function () {",
 											"    pm.expect(responseJSON.meta).to.be.an('object');",
 											"",
 											"    pm.expect(responseJSON.meta).to.have.property('pagination');",
@@ -5162,7 +5495,7 @@
 											"});",
 											"",
 											"// Test the meta object-count-structure and properties",
-											"pm.test(\"Meta object structure is valid\", function () {",
+											"pm.test(\"Meta object structure count is valid\", function () {",
 											"    pm.expect(responseJSON.meta).to.be.an('object');",
 											"",
 											"    pm.expect(responseJSON.meta).to.have.property('pagination');",
@@ -5176,7 +5509,7 @@
 											"});",
 											"",
 											"// Test the meta object-per_page-structure and properties",
-											"pm.test(\"Meta object structure is valid\", function () {",
+											"pm.test(\"Meta object structure per_page is valid\", function () {",
 											"    pm.expect(responseJSON.meta).to.be.an('object');",
 											"",
 											"    pm.expect(responseJSON.meta).to.have.property('pagination');",
@@ -5192,7 +5525,7 @@
 											"",
 											"",
 											"// Test the meta object-current_page-structure and properties",
-											"pm.test(\"Meta object structure is valid\", function () {",
+											"pm.test(\"Meta object structure current_page is valid\", function () {",
 											"    pm.expect(responseJSON.meta).to.be.an('object');",
 											"",
 											"    pm.expect(responseJSON.meta).to.have.property('pagination');",
@@ -5207,7 +5540,7 @@
 											"",
 											"",
 											"// Test the meta object-total_pages-structure and properties",
-											"pm.test(\"Meta object structure is valid\", function () {",
+											"pm.test(\"Meta object structure total_pages is valid\", function () {",
 											"    pm.expect(responseJSON.meta).to.be.an('object');",
 											"",
 											"    pm.expect(responseJSON.meta).to.have.property('pagination');",
@@ -5218,12 +5551,10 @@
 											"    pm.expect(pagination).to.have.property('total_pages').is.not.null;",
 											"    pm.expect(pagination).to.have.property('total_pages').is.a('number');",
 											"    pm.expect(pagination).to.have.property('total_pages').is.not.below(0);",
-											"",
-											"    pm.expect(pagination).to.have.property('links');",
 											"});",
 											"",
 											"// Test the meta object-total_pages-structure and properties",
-											"pm.test(\"Meta object structure is valid\", function () {",
+											"pm.test(\"Meta object structure link is valid\", function () {",
 											"    pm.expect(responseJSON.meta).to.be.an('object');",
 											"",
 											"    pm.expect(responseJSON.meta).to.have.property('pagination');",
@@ -5236,8 +5567,7 @@
 											"});",
 											""
 										],
-										"type": "text/javascript",
-										"id": "20f5fd6f-cf98-43c1-8cf8-f3ca891b1898"
+										"type": "text/javascript"
 									}
 								}
 							],
