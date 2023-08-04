@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "a8c4b681-894a-49cc-a757-2f637e8ec8bc",
-		"name": "MyCanvass Mobile App API",
+		"name": "Mobile App API",
 		"description": "The Mobile App's API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_uid": "28863956-a8c4b681-894a-49cc-a757-2f637e8ec8bc"
